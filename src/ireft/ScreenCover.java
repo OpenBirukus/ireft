@@ -23,7 +23,7 @@ public class ScreenCover extends Stage {
     {
 
         // Add title to the stage
-        setTitle("Star Window Plot");
+        setTitle("???? ??? ?? ??::");
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
 
         // set initial dimensions
@@ -41,24 +41,32 @@ public class ScreenCover extends Stage {
         grid.setHgap(10);
         grid.setVgap(12);
         grid.setAlignment(Pos.CENTER);
+        grid.setStyle("-fx-background-color:#222222;");
 
         HBox hbButtons = new HBox();
         hbButtons.setSpacing(10.0);
 
         // create scene
         Scene scene = new Scene(grid);
-        //setStyle("-fx-background-color:#555555;");
+        setOpacity(0.8);
+        setResizable(false);
+        setAlwaysOnTop(true);
+        setFullScreen(true);
+        setIconified(false);
+
 
 
         // Plot labels
-        Label textTitle = new Label("Break Time alarm");
+        Label textTitle = new Label("???? ??? : Break Time alarm");
         textTitle.setFont(new Font("Arial", 150));
+        textTitle.setStyle("color:white");
         // add to VBox
        grid.add(textTitle, 0, 0, 5, 5);
 
         // Plot labels
         Label textTitle2 = new Label("Time to move around");
-        textTitle.setFont(new Font("Arial", 70));
+        textTitle2.setFont(new Font("Arial", 70));
+        textTitle2.setStyle("color:white");
         // add to VBox
         grid.add(textTitle2,0,6,5,3);
 

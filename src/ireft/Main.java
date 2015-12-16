@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -23,6 +25,7 @@ import javafx.util.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Locale;
 
 public class Main extends Application {
 
@@ -30,7 +33,9 @@ public class Main extends Application {
 
     boolean runScreenCover = false;
 
-    ScreenCover screenCover;
+    boolean screenOnStatus = true;
+
+    ireft.ScreenCover screenCover;
 
     TextField workPeriodStr = new TextField("45");
     TextField restPeriodStr = new TextField("5");
@@ -39,10 +44,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-       Group root = new Group();
-       Scene scene = new Scene(root, 500, 500, Color.BLACK);
-        primaryStage.setTitle("Ireft");
+        Group root = new Group();
+        Scene scene = new Scene(root, 500, 500, Color.BLACK);
+        String st = new String("Ireft");
+        primaryStage.setTitle(st);
         primaryStage.setScene(scene);
 
         setInputDialog();
@@ -60,9 +65,10 @@ public class Main extends Application {
     private void setInputDialog()
     {
         // Title
-        Label textTitle = new Label("Ireft - the break time reminder");
+        Label textTitle = new Label("Ireft: the break time reminder");
         textTitle.setFont(new Font("Arial", 30));
-        pane.add(textTitle, 0, 0, 3, 1);
+
+        pane.add(textTitle, 0, 0, 4, 1);
 
         // get star catalog path
         pane.add(new Label("Work Period (min): "), 0, 1, 1, 1);
@@ -75,10 +81,10 @@ public class Main extends Application {
         pane.add(restPeriodStr, 1, 2, 2, 1);
 
         Button buttonStart = new Button("Start");
-        pane.add(buttonStart, 2, 3, 1, 1);
+        pane.add(buttonStart, 1, 3, 1, 1);
 
         Button buttonStop = new Button("Stop");
-        pane.add(buttonStop, 3, 3, 1, 1);
+        pane.add(buttonStop, 2, 3, 1, 1);
 
         pane.setVgap(20);
         pane.setHgap(4);
@@ -129,31 +135,22 @@ public class Main extends Application {
 
                     @Override
                     public void handle(ActionEvent event) {
-                        screenCover.show();
-                        System.out.println("show");
-                    }
-                }));
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds((Integer.valueOf(restPeriodStr.getText()) * 60 )),
-                new EventHandler<ActionEvent>() {
+                        screenOnStatus = !screenOnStatus;
 
-                    @Override
-                    public void handle(ActionEvent event) {
-                        screenCover.hide();
-                        System.out.println("hide");
+                        if(screenOnStatus) {
+                            screenCover.show();
+                            System.out.println("show");
+                        }
+                        else{
+                            screenCover.hide();
+                            System.out.println("hide");
+                        }
+
                     }
                 }));
+
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-//        while(runScreenCover)
-//        {
-////            screenCover.show();
-//            try {
-//                Thread.sleep();
-//            } catch(Exception e) {
-//
-//            }
-//        }
-
 
     }
 }

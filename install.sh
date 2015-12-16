@@ -7,20 +7,15 @@
 
 JAVA=/opt/jdk1.8.0_60/bin
 
-
-
 ########################################################
-JAVAC=$JAVA/javac
 
-$JAVAC -d src/ src/*.java
+rm -rf ~/.Ireft
+mkdir ~/.Ireft/
+cp out/ireft.jar ~/.Ireft/ireft.jar
 
-$JAVA/jar cfm out/ireft.jar src/manifest.mf ireft/*.class 
+echo "#!/bin/bash">~/.Ireft/ireft.sh
+echo "$JAVA -jar ~/.Ireft/ireft.jar">>~/Ireft/ireft.sh
 
-rm src/*.class
+chmod +x ~/Ireft/ireft.sh
 
-echo "#!/bin/bash">>ireft.sh
-echo "java -jar ireft.jar">>ireft.sh
-
-chmod +x ireft.sh
-
-./ireft.sh
+echo "$JAVA -jar ~/.Ireft/ireft.jar &" >> ~/.profile
